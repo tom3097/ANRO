@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- Turtlesim node -->
+  <node pkg="turtlesim" type="turtlesim_node" name="turtle1"/>
+  <!-- Sample talker node -->
+  <node pkg="sample_turtle" type="sample_talker.py" name="sample_talker" output="screen"/>
+
+</launch>

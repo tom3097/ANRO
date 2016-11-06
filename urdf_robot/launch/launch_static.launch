@@ -1,0 +1,7 @@
+<launch>
+<arg name="gui" default="False" />
+<param name="robot_description" textfile='$(find urdf_robot)/urdf/static_robot.urdf' />
+<param name="use_gui" value="$(arg gui)"/>
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_robot)/rviz/my_robot.rviz" required="true" />
+</launch>

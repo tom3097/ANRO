@@ -1,0 +1,93 @@
+<robot name="static_robot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.2" />
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="Link1Type1">
+    <visual>
+      <geometry>
+        <box size="3 0.1 0.1" />
+      </geometry>
+      <origin xyz = "-1.5 0 0"/>
+    </visual>
+  </link>
+
+ <link name="Link1Type2">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.2" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="Link1Type2_to_Link1Type1" type="fixed">
+    <parent link="Link1Type2" />
+    <child link="Link1Type1" />
+  </joint>
+
+  <joint name="joint1" type="fixed">
+    <parent link="base_link"/>
+    <child link="Link1Type2"/>
+    <origin xyz="1.50138 2.59728 0" rpy="0 -0 1.04667" />
+  </joint>
+
+  <link name="Link2Type1">
+    <visual>
+      <geometry>
+        <box size="1.5 0.1 0.1" />
+      </geometry>
+      <origin xyz = "-0.75 0 0"/>
+    </visual>
+  </link>
+
+  <link name="Link2Type2">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.2" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="Link2Type2_to_Link2Type1" type="fixed">
+    <parent link="Link2Type2" />
+    <child link="Link2Type1" />
+  </joint>
+
+  <joint name="joint2" type="fixed">
+    <parent link="Link1Type2"/>
+    <child link="Link2Type2"/>
+    <origin xyz="1.29924 0.749655 0" rpy="3.14159 -0 0.523333" />
+  </joint>
+
+  <link name="Link3Type1">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 3" />
+      </geometry>
+      <origin xyz = "0 0 -1.5"/>
+    </visual>
+  </link>
+
+  <link name="Link3Type2">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.2" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="Link3Type2_to_Link3Type1" type="fixed">
+    <parent link="Link3Type2" />
+    <child link="Link3Type1" />
+  </joint>
+
+  <joint name="joint3" type="fixed">
+    <parent link="Link2Type2"/>
+    <child link="Link3Type2"/>
+    <origin xyz="0 0 2" rpy="0 0 0" />
+  </joint>
+ </robot>
