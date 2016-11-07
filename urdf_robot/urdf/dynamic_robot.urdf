@@ -1,4 +1,4 @@
-<robot name="static_robot">
+<robot name="dynamic_robot">
   <link name="base_link">
     <visual>
       <geometry>
