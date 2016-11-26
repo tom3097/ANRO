@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   urdf
+  geometry_msgs
+  std_srvs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -56,11 +58,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+   FILES
+   ForwardKinematics.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -70,10 +71,12 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  geometry_msgs
+  std_srvs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -109,6 +112,7 @@ catkin_package(
 #  LIBRARIES urdf_robot
 #  CATKIN_DEPENDS kdl_conversions kdl_parser roscpp rospy sensor_msgs std_msgs tf urdf
 #  DEPENDS system_lib
+   CATKIN_DEPENDS roscpp rospy geometry_msgs message_runtime sensor_msgs std_msgs std_srvs tf urdf visualization_msgs
 )
 
 ###########
@@ -135,6 +139,10 @@ include_directories(
 ## Declare a C++ executable
 add_executable(dh2urdf src/dh2urdf.cpp)
 add_executable(parser src/parser.cpp)
+add_executable(FkSolverKDL src/FkSolverKDL.cpp)
+add_executable(ManInTheMiddle src/ManInTheMiddle.cpp)
+
+add_executable(FkSolverManual src/FkSolverManual.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -144,9 +152,23 @@ add_executable(parser src/parser.cpp)
 target_link_libraries(dh2urdf
   ${catkin_LIBRARIES}
 )
+
 target_link_libraries(parser
   ${catkin_LIBRARIES}
 )
+
+target_link_libraries(FkSolverKDL
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(FkSolverManual
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(ManInTheMiddle
+  ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##
@@ -163,11 +185,11 @@ target_link_libraries(parser
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS urdf_robot urdf_robot_node
+install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
@@ -182,6 +204,18 @@ target_link_libraries(parser
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+install(
+  DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  FILES_MATCHING PATTERN "*.launch"
+)
+
+install(
+  DIRECTORY urdf
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  FILES_MATCHING PATTERN "*.urdf"
+)
 
 #############
 ## Testing ##

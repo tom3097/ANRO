@@ -1,0 +1,5 @@
+float64 theta1
+float64 theta2
+float64 d3
+---
+geometry_msgs/Point final_pos
