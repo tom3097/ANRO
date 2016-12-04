@@ -51,11 +51,12 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
+add_message_files(
+   FILES
 #   Message1.msg
 #   Message2.msg
-# )
+   JointStateInter.msg
+)
 
 ## Generate services in the 'srv' folder
 add_service_files(
@@ -141,8 +142,10 @@ add_executable(dh2urdf src/dh2urdf.cpp)
 add_executable(parser src/parser.cpp)
 add_executable(FkSolverKDL src/FkSolverKDL.cpp)
 add_executable(ManInTheMiddle src/ManInTheMiddle.cpp)
-
 add_executable(FkSolverManual src/FkSolverManual.cpp)
+
+add_executable(InterpolTraject src/InterpolTraject.cpp)
+add_executable(MovePublisher src/MovePublisher.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -170,6 +173,17 @@ target_link_libraries(ManInTheMiddle
 )
 
 
+target_link_libraries(InterpolTraject
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(MovePublisher
+  ${catkin_LIBRARIES}
+)
+
+
+
+
 #############
 ## Install ##
 #############
@@ -185,7 +199,7 @@ target_link_libraries(ManInTheMiddle
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle
+install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
