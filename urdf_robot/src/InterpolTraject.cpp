@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
-#include "urdf_robot/JointStateInter.h"
+#include "urdf_robot/MoveMessage.h"
 #include <visualization_msgs/Marker.h>
 #include "urdf_robot/ForwardKinematics.h"
 
@@ -105,10 +105,9 @@ void timer_cb(const ros::TimerEvent& event) {
   t += kwant;
 }
 
-void subscriber_cb(const urdf_robot::JointStateInterConstPtr &msg) {
-
+void subscriber_cb(const urdf_robot::MoveMessageConstPtr &msg) {
   shift.setBeginning(state.position[0], state.position[1], state.position[2]);
-  shift.setEnd(msg->theta1, msg->theta2, msg->d3);
+  shift.setEnd(msg->val1, msg->val2, msg->val3);
   shift.setDurationRever(msg->durationRever);
 
   deleteMarkers();
@@ -148,16 +147,15 @@ void init_marker() {
 }
 
 int main(int argc, char **argv) {
+  ros::init(argc, argv, "InterpolTrajectory");
 
   init_joint_state();
   init_marker();
 
-  ros::init(argc, argv, "InterpolTrajectory");
   ros::NodeHandle n;
-
   publisher = n.advertise<sensor_msgs::JointState>("calculated_trajectory", 1);
   timer = n.createTimer(ros::Duration(kwant), timer_cb);
-  subscriber = n.subscribe<urdf_robot::JointStateInter>("move_topic", 100, subscriber_cb);
+  subscriber = n.subscribe<urdf_robot::MoveMessage>("move_topic", 100, subscriber_cb);
   publisherMarker = n.advertise<visualization_msgs::Marker>("visualization_marker", 100);
   clientKDL = n.serviceClient<urdf_robot::ForwardKinematics>("SolverKDL");
 

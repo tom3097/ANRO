@@ -55,7 +55,7 @@ add_message_files(
    FILES
 #   Message1.msg
 #   Message2.msg
-   JointStateInter.msg
+   MoveMessage.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -143,9 +143,16 @@ add_executable(parser src/parser.cpp)
 add_executable(FkSolverKDL src/FkSolverKDL.cpp)
 add_executable(ManInTheMiddle src/ManInTheMiddle.cpp)
 add_executable(FkSolverManual src/FkSolverManual.cpp)
-
 add_executable(InterpolTraject src/InterpolTraject.cpp)
 add_executable(MovePublisher src/MovePublisher.cpp)
+add_executable(InterpolGrasper src/InterpolGrasper.cpp)
+
+add_dependencies(FkSolverKDL ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(FkSolverManual ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(InterpolTraject ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(InterpolGrasper ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(MovePublisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -177,11 +184,13 @@ target_link_libraries(InterpolTraject
   ${catkin_LIBRARIES}
 )
 
-target_link_libraries(MovePublisher
+target_link_libraries(InterpolGrasper
   ${catkin_LIBRARIES}
 )
 
-
+target_link_libraries(MovePublisher
+  ${catkin_LIBRARIES}
+)
 
 
 #############
@@ -199,7 +208,7 @@ target_link_libraries(MovePublisher
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher
+install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher InterpolGrasper
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
