@@ -1,0 +1,8 @@
+geometry_msgs/Point final_pos
+float64 theta1_init
+float64 theta2_init
+float64 d3_init
+---
+float64 theta1
+float64 theta2
+float64 d3
