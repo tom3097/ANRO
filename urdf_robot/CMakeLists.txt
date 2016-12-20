@@ -62,6 +62,7 @@ add_message_files(
 add_service_files(
    FILES
    ForwardKinematics.srv
+   InverseKinematics.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -147,11 +148,17 @@ add_executable(InterpolTraject src/InterpolTraject.cpp)
 add_executable(MovePublisher src/MovePublisher.cpp)
 add_executable(InterpolGrasper src/InterpolGrasper.cpp)
 
+add_executable(IkSolverKDL src/IkSolverKDL.cpp)
+add_executable(InterpolInverseKin src/InterpolInverseKin.cpp)
+
 add_dependencies(FkSolverKDL ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(FkSolverManual ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(InterpolTraject ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(InterpolGrasper ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(MovePublisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_dependencies(IkSolverKDL ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(InterpolInverseKin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Add cmake target dependencies of the executable
@@ -192,6 +199,13 @@ target_link_libraries(MovePublisher
   ${catkin_LIBRARIES}
 )
 
+target_link_libraries(IkSolverKDL
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(InterpolInverseKin
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
@@ -208,7 +222,7 @@ target_link_libraries(MovePublisher
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher InterpolGrasper
+install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher InterpolGrasper IkSolverKDL InterpolInverseKin
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
