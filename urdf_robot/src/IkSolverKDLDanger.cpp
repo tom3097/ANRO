@@ -7,25 +7,9 @@
 #include <kdl/chainiksolverpos_lma.hpp>
 #include <kdl/chainiksolverpos_nr.hpp>
 #include "urdf_robot/InverseKinematics.h"
-#include <sstream>
 
 bool calculateJointsKDL(urdf_robot::InverseKinematics::Request &req,
                         urdf_robot::InverseKinematics::Response &res) {
-    double x = req.final_pos.x;
-    double y = req.final_pos.y;
-    double z = req.final_pos.z;
-    double a1 = 3.0;
-    double a2 = 1.5;
-    double c2 = pow((x*x + y*y - a1*a1 - a2*a2) / (2*a1*a2), 2);
-    if(c2 > 1.0 || z < -3.0 || z > -0.2) {
-        std::stringstream ss;
-        ss << "Position: ";
-        ss << x << " " << y << " " << " " << z;
-        ss << " cannot be reached\n.";
-        ROS_ERROR_STREAM(ss.str());
-        return false;
-    }
-
     KDL::Chain chain;
     chain.addSegment(KDL::Segment(KDL::Joint(KDL::Joint::RotZ), KDL::Frame::DH(3, 0, 0, 0)));
     chain.addSegment(KDL::Segment(KDL::Joint(KDL::Joint::RotZ), KDL::Frame::DH(1.5, 0, 0, 0)));
@@ -60,10 +44,10 @@ bool calculateJointsKDL(urdf_robot::InverseKinematics::Request &req,
 
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "IkSolverKDL");
+    ros::init(argc, argv, "IkSolverKDLDanger");
     ros::NodeHandle n;
 
-    ros::ServiceServer service = n.advertiseService("SolverKDL", calculateJointsKDL);
+    ros::ServiceServer service = n.advertiseService("SolverKDLDanger", calculateJointsKDL);
     ros::spin();
 
     return 0;

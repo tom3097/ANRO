@@ -17,12 +17,12 @@ int main(int argc, char **argv) {
   msg.val1 = strtod(argv[1], NULL);
   msg.val2 = strtod(argv[2], NULL);
   msg.val3 = strtod(argv[3], NULL);
-  double duration = strtod(argv[4], NULL);
-  msg.durationRever = 1.0/duration;
+  msg.duration = strtod(argv[4], NULL);
+  msg.durationRever = 1.0/msg.duration;
 
   ros::Duration(2.0).sleep();
   publisher.publish(msg);
-  ros::Duration(duration+0.5).sleep();
+  ros::Duration(msg.duration+0.5).sleep();
 
   ros::spinOnce();
 

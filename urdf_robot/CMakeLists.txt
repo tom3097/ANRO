@@ -148,8 +148,13 @@ add_executable(InterpolTraject src/InterpolTraject.cpp)
 add_executable(MovePublisher src/MovePublisher.cpp)
 add_executable(InterpolGrasper src/InterpolGrasper.cpp)
 
+
+
 add_executable(IkSolverKDL src/IkSolverKDL.cpp)
 add_executable(InterpolInverseKin src/InterpolInverseKin.cpp)
+
+add_executable(SafeInvKinCubic src/SafeInvKinCubic.cpp)
+add_executable(IkSolverKDLDanger src/IkSolverKDLDanger.cpp)
 
 add_dependencies(FkSolverKDL ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(FkSolverManual ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -159,6 +164,9 @@ add_dependencies(MovePublisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPO
 
 add_dependencies(IkSolverKDL ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(InterpolInverseKin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_dependencies(SafeInvKinCubic ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(IkSolverKDLDanger ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Add cmake target dependencies of the executable
@@ -207,6 +215,14 @@ target_link_libraries(InterpolInverseKin
   ${catkin_LIBRARIES}
 )
 
+target_link_libraries(SafeInvKinCubic
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(IkSolverKDLDanger
+  ${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############
@@ -222,7 +238,7 @@ target_link_libraries(InterpolInverseKin
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher InterpolGrasper IkSolverKDL InterpolInverseKin
+install(TARGETS dh2urdf FkSolverKDL FkSolverManual ManInTheMiddle  InterpolTraject MovePublisher InterpolGrasper IkSolverKDL InterpolInverseKin SafeInvKinCubic IkSolverKDLDanger
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

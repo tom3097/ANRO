@@ -6,7 +6,7 @@
 <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 <rosparam param="source_list">["calculated_trajectory"]</rosparam>
 <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-<node name="InterpolInverseKin" pkg="urdf_robot" type="InterpolInverseKin" />
-<node name="IkSolverKDLDanger" pkg="urdf_robot" type="IkSolverKDLDanger" />
+<node name="SafeInvKinCubic" pkg="urdf_robot" type="SafeInvKinCubic" />
+<node name="IkSolverKDL" pkg="urdf_robot" type="IkSolverKDL" />
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_robot)/rviz/inv_kin_inter.rviz" required="true" />
 </launch>
