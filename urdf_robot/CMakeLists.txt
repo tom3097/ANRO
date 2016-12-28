@@ -56,6 +56,7 @@ add_message_files(
 #   Message1.msg
 #   Message2.msg
    MoveMessage.msg
+   DeltaMessage.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -148,6 +149,9 @@ add_executable(InterpolTraject src/InterpolTraject.cpp)
 add_executable(MovePublisher src/MovePublisher.cpp)
 add_executable(InterpolGrasper src/InterpolGrasper.cpp)
 
+add_executable(CustomInterpol src/CustomInterpol.cpp)
+add_executable(DeltaPublisher src/DeltaPublisher.cpp)
+
 
 
 add_executable(IkSolverKDL src/IkSolverKDL.cpp)
@@ -167,6 +171,10 @@ add_dependencies(InterpolInverseKin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 
 add_dependencies(SafeInvKinCubic ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(IkSolverKDLDanger ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_dependencies(CustomInterpol ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_dependencies(DeltaPublisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Add cmake target dependencies of the executable
@@ -220,6 +228,14 @@ target_link_libraries(SafeInvKinCubic
 )
 
 target_link_libraries(IkSolverKDLDanger
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(CustomInterpol
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(DeltaPublisher
   ${catkin_LIBRARIES}
 )
 

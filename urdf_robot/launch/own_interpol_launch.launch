@@ -1,0 +1,12 @@
+<launch>
+<arg name="model" default='$(find urdf_robot)/urdf/dynamic_robot.urdf' />
+<arg name="gui" default="False" />
+<param name="robot_description" textfile="$(arg model)" />
+<param name="use_gui" value="$(arg gui)"/>
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<rosparam param="source_list">["calculated_trajectory"]</rosparam>
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+<node name="CustomInterpol" pkg="urdf_robot" type="CustomInterpol" />
+<node name="IkSolverKDL" pkg="urdf_robot" type="IkSolverKDL" />
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_robot)/rviz/inv_kin_inter.rviz" required="true" />
+</launch>
